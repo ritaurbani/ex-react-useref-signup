@@ -1,12 +1,18 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 
 function App() {
-  const [name, setName] = useState("rita")
+  const [description, setDescription] = useState("sono una studentessa")
   const [username, setUsername] = useState("alwaysrita")
   const [password, setPassword] = useState("hello")
-  const [specialty, setSpecialty] = useState("front-end")
-  const [years, setYears] = useState("1")
-  const [description, setDescription] = useState("sono una studentessa")
+
+  //Campi non controllati
+  // const [specialty, setSpecialty] = useState("front-end")
+  // const [years, setYears] = useState("1")
+  // const [name, setName] = useState("rita")
+
+  const nameRef = useRef()
+  const specialtyRef = useRef()
+  const yearsRef = useRef()
 
   const letters = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
@@ -42,6 +48,11 @@ function App() {
   
   const submit = (e) => {
     e.preventDefault()
+    //raccogliamo qui i valori non controllati
+    const name = nameRef.current.value
+    const years = yearsRef.current.value
+    const specialty = specialtyRef.current.value
+
     if (//Se l'utente inserisce soli spazi in un campo, 
     // il tuo primo codice lo considererebbe comunque valido:
       //if (name) controlla solo che name non sia null, 
@@ -52,7 +63,11 @@ function App() {
       !specialty.trim() ||
       !years.trim() ||
       years <= 0 || //anni non deve essere numero negativo
-      !description.trim()
+      !description.trim() ||
+      //qui dobbiamo anche aggiungere le validazioni tempo reale fatte
+      !isDescriptionValid ||
+      !isPasswordValid ||
+      !isUserNameValid
     ) {
       alert("you need to fill the field")
       return;// Blocca l'invio
@@ -76,8 +91,9 @@ function App() {
             <p>Nome Completo</p>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              ref={nameRef}
+              // value={name}
+              // onChange={(e) => setName(e.target.value)}
               placeholder="name" />
           </label>
         </section>
@@ -102,11 +118,20 @@ function App() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="password" />
-
+            {password.trim() && (
+              <p style={{color: isPasswordValid? "green" : "red"}}>
+                {isPasswordValid? "Password is Valid" : "Password must contain 8 characters"}
+              </p>
+            )}
         </section>
         {/* SPECIALTY */}
         <section>
-          <select value={specialty} onChange={(e) => setSpecialty(e.target.value)}>
+          <select 
+          ref={specialtyRef}
+          // value={specialty} 
+          // onChange={(e) => setSpecialty(e.target.value)}
+          >
+            <option value="">Select a specialty</option>
             <option value="Full Stack">Full Stack</option>
             <option value="Frontend">Frontend</option>
             <option value="Backend">Backend</option>
@@ -116,8 +141,9 @@ function App() {
         <section>
           <input
             type="number"
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
+            ref={yearsRef}
+            // value={years}
+            // onChange={(e) => setYears(e.target.value)}
             placeholder="years of experience" />
         </section>
         {/* DESCRIPTION */}
@@ -127,6 +153,10 @@ function App() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="description"> </textarea>
+            {description.trim() && 
+            <p style={{color: isDescriptionValid? "green" : "red"}}>
+              {isDescriptionValid? "Description not valid": `Deve avere tra i 100 e 1000 caratteri ${description.trim().length}`}
+            </p>}
         </section>
         <button className='btn' type='sumbmit'>Submit</button>
       </form>
