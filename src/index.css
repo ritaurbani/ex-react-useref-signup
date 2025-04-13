@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input, textarea, select{
+  margin: 20px;
+  display: block;
+  height: 30px;
+  border-radius: 10px;
+  width: 70%;
+}
+
