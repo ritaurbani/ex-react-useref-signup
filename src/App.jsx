@@ -120,7 +120,7 @@ function App() {
             placeholder="password" />
             {password.trim() && (
               <p style={{color: isPasswordValid? "green" : "red"}}>
-                {isPasswordValid? "Password is Valid" : "Password must contain 8 characters"}
+                {isPasswordValid? "Password is Valid" : "Password must contain 8 characters and include letters, at least 1 number 1 symbol and "}
               </p>
             )}
         </section>
