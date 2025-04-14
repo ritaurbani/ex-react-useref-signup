@@ -1,3 +1,27 @@
+// Cos'è isUserNameValid?
+// È una variabile(non una funzione!) grazie a useMemo.
+
+//   javascript
+// Copy
+// const isUserNameValid = useMemo(() => { /* logica */ }, [username]);
+// useMemo memorizza il risultato della funzione e lo assegna a isUserNameValid.
+
+// Quando username cambia, useMemo ricalcola automaticamente il valore.
+
+// Se non usassi useMemo:
+// Dovresti usare una funzione normale e invocarla:
+
+// jsx
+// Copy
+// const isUserNameValid = () => { /* logica */ };
+// // Nel JSX:
+// { isUserNameValid() ? "Valid" : "Invalid" }
+// Ma con useMemo è più efficiente perché evita ricalcoli inutili.
+// senza useMemo:
+// La funzione viene ricalcolata ad ogni render(anche se username non cambia).
+// Con useMemo invece, il calcolo avviene solo quando username cambia.
+
+
 import { useState, useMemo, useRef } from 'react'
 
 function App() {
