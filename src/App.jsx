@@ -1,8 +1,6 @@
 // Cos'è isUserNameValid?
 // È una variabile(non una funzione!) grazie a useMemo.
 
-//   javascript
-// Copy
 // const isUserNameValid = useMemo(() => { /* logica */ }, [username]);
 // useMemo memorizza il risultato della funzione e lo assegna a isUserNameValid.
 
@@ -11,8 +9,6 @@
 // Se non usassi useMemo:
 // Dovresti usare una funzione normale e invocarla:
 
-// jsx
-// Copy
 // const isUserNameValid = () => { /* logica */ };
 // // Nel JSX:
 // { isUserNameValid() ? "Valid" : "Invalid" }
@@ -42,16 +38,21 @@ function App() {
   const numbers = "0123456789";
   const symbols = "!@#$%^&*()-_=+[]{}|;:'\\',.<>?/`~";
 
+
+
   //ricalcolata solo nel caso in cui cambia userName > useMemo con dipendenza
   const isUserNameValid = useMemo(() => {
+    
     //Deve contenere solo caratteri alfanumerici 
     // e almeno 6 caratteri (no spazi o simboli).
     //controllo se per ognuno dei caratteri vedo se quel carattere e incluso in lettere o numeri
+    //return (..logica..) oppure const charsValid come sotto e poi return charsValid
     const charsValid = username.split("").every((char) => 
     letters.includes(char.toLowerCase()) || numbers.includes(char))
     //isUserNameValid sara uguale a:
     return charsValid && username.trim().length >=6
   },[username])//chars di username are valid quando sono incluse in letters, numbers...
+
 
  const isPasswordValid = useMemo(() => {
    //Deve contenere almeno 8 caratteri, 1 lettera, 1 numero e 1 simbolo.
